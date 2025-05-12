@@ -1,4 +1,5 @@
-🔍 RAG-Based Document QA System
+🔍 RAG-Based Document QA System                
+
 This project is a Retrieval-Augmented Generation (RAG) system built using FAISS, HuggingFace Transformers, and LangChain. It enables document ingestion, semantic indexing, diverse search strategies, and free-text answer generation via a local language model.
 
 🛠️ Environment Setup
