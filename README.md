@@ -10,6 +10,7 @@ This project is a Retrieval-Augmented Generation (RAG) system implemented entire
 ```bash
 python -m venv rag_env
 rag_env\Scripts\activate  # On Windows
+```
 # or
 source rag_env/bin/activate  # On macOS/Linux
 2. Install all dependencies
