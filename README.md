@@ -1,115 +1,108 @@
-# 🔍 RAG-Based Document QA System                
+# 🔍 RAG-Based Document QA System
 
-This project is a Retrieval-Augmented Generation (RAG) system built using FAISS, HuggingFace Transformers, and LangChain. It enables document ingestion, semantic indexing, diverse search strategies, and free-text answer generation via a local language model.
+This project is a Retrieval-Augmented Generation (RAG) system implemented entirely in a single Python file, `main.py`, using open-source tools like FAISS, HuggingFace Transformers, and LangChain. It allows users to search a local document corpus and generate context-aware answers using a lightweight local language model.
+
+---
 
 ## 🛠️ Environment Setup
-1. Create and activate a virtual environment
-bash
-Copy
+
+### 1. Create and activate a virtual environment
+```bash
 python -m venv rag_env
 rag_env\Scripts\activate  # On Windows
-or
+# or
 source rag_env/bin/activate  # On macOS/Linux
-
 2. Install all dependencies
 bash
 Copy
 pip install -r requirements.txt
 
-- Or install individually:
+# Or install manually:
 pip install langchain sentence-transformers faiss-cpu PyMuPDF python-docx scikit-learn transformers accelerate
-
-3. (Optional) API Configuration
-If you're using any external LLM APIs, set them in config.py. This version supports running fully locally, so no API keys are required.
-
-## 📁 Project Structure
-graphql
+📁 Project Structure
+perl
 Copy
-rag-assignment/
-├── documents/              # Source files (.pdf, .docx, .txt)                                     
-├── main.py                 # Main control script                                   
-└── README.md               # Project documentation                   
+rag-system/
+├── documents/              # Place your source files here (.pdf, .docx, .txt)
+├── faiss_store/            # Automatically created to store vector index & metadata
+├── main.py                 # Full system logic (loading, embedding, search, and generation)
+└── README.md               # Documentation
+🧠 System Workflow
+The system begins by loading and parsing .pdf, .docx, and .txt files placed in the documents/ directory. These documents are split into chunks to preserve context, and sentence embeddings are generated using the all-MiniLM-L6-v2 model. The embeddings are stored in a FAISS vector index for efficient similarity search. Users can perform either standard top-K semantic retrieval or apply MMR (Maximal Marginal Relevance) to increase diversity in results. Finally, a local language model (such as google/flan-t5-base) can be used to generate an answer from the retrieved context.
 
-## 🧠 System Workflow Overview
-Document Ingestion: PDFs, DOCX, and TXT files are parsed using custom loaders.
+🧪 Retrieval and Generation Modes
+The system offers three key modes:
 
-Text Chunking: Documents are split into overlapping text chunks for better context retention.
+Mode 2: Semantic Search, retrieves the top-K most relevant chunks.
 
-Embedding Generation: Sentence embeddings are generated via all-MiniLM-L6-v2.
+Mode 3: MMR Search, improves result diversity by reducing redundancy.
 
-FAISS Indexing: Embeddings and metadata are stored in a FAISS vector index.
+Mode 4: RAG Answer, synthesizes an answer using retrieved documents and a local LLM.
 
-Search Modes:
+📊 Evaluation Metrics
+The system can be qualitatively evaluated using:
 
-Mode 2: Standard top-K semantic retrieval.
+Precision: Measures how many retrieved chunks are relevant.
 
-Mode 3: MMR search to increase diversity of results.
+Recall: Measures how many relevant chunks were successfully retrieved.
 
-Answer Generation:
+F1-score: Balances both precision and recall.
 
-Mode 4: Retrieves documents and generates answers using google/flan-t5-base.
+With default configuration, it achieves reasonable accuracy for document QA tasks using local models.
 
-## 🧪 Retrieval Strategy Comparison
-The system provides three distinct retrieval and generation modes, each designed to address specific information retrieval needs. **Mode 2**, known as *Semantic Search*, performs a standard top-K similarity-based retrieval using sentence embeddings to return the most relevant document chunks based on a user's query. **Mode 3**, called *MMR Search* (Maximal Marginal Relevance), enhances the diversity of retrieved results by balancing relevance and novelty, reducing redundancy in the returned documents. **Mode 4**, referred to as *RAG Answer*, integrates retrieval with language generation, where retrieved documents are fed into a local language model (e.g., Flan-T5) to generate a synthesized, context-aware answer to the user’s question. Each mode offers unique strengths, making the system flexible for various use cases.
+✅ Advantages
+Fully functional in a single file (main.py)
 
-## 📊 Evaluation Metrics
-Precision: Proportion of retrieved documents that are relevant.
+No need for API keys or external services
 
-Recall: Proportion of relevant documents retrieved out of all relevant documents.
+Supports various document formats
 
-F1-score: Harmonic mean of precision and recall.
+Efficient search via FAISS
 
-Sample Result (Default Configuration)
-Precision: ~X%
+Context-aware generation using HuggingFace models
 
-Recall: ~Y%
+⚠️ Limitations
+Limited generation detail due to small LLMs
 
-F1-Score: ~Z%
+No GUI (CLI only)
 
-## ✅ Pros
-Fully local (no API keys required)
+Manual evaluation unless extended
 
-Flexible and modular architecture
+🚧 Challenges Solved
+Several development challenges were tackled, including replacing API-based models with open-source alternatives to avoid rate limits, adapting LangChain components for embedding and generation, and storing metadata in FAISS for better traceability. The system also handles multiple document formats through unified logic and optimizes chunk sizing for improved results.
 
-Multiple search strategies supported
+📥 Preparing Your Corpus
+Simply place your .pdf, .docx, or .txt files into the documents/ folder. They will be automatically processed during indexing.
 
-Easily extendable with LangChain components
+💽 Index Files
+File	Description
+index_miniLM.index	Stores FAISS vector embeddings
+index_miniLM_metadata.pkl	Stores corresponding chunk metadata
 
-## ⚠️ Limitations
-Smaller models like flan-t5-base may limit generation detail
-
-No web interface (CLI only)
-
-Evaluation is manual or offline
-
-## 🚧 Challenges Addressed
-During development, several key challenges were addressed to improve the system's robustness and usability. One major issue was the limitation of API quotas from services like OpenAI, which was resolved by switching to HuggingFace transformers for fully local model usage. Compatibility concerns with LangChain embeddings were tackled by implementing the appropriate HuggingFace wrappers to ensure smooth integration. To support better tracking of document chunks, metadata was stored alongside vectors in the FAISS index, enabling clearer retrieval and display. Redundancy in search results was reduced by incorporating Maximal Marginal Relevance (MMR), which enhances diversity in retrieved content. The system also handled the variability of document formats—such as PDFs, DOCX, and TXT—by introducing unified loaders. Lastly, chunk size and overlap were carefully tuned to balance between context retention and embedding efficiency, optimizing both retrieval performance and generation quality.
-
-## 📥 Document Corpus Instructions
-Place your .pdf, .docx, or .txt files into the documents/ directory. The system automatically loads and processes all supported files.
-
-## 💽 Model + Index Files
-File	Purpose
-index_miniLM.index	FAISS vector index
-index_miniLM_metadata.pkl	Metadata for each chunk
-
-## ▶️ Running the System
+▶️ Running the System
 bash
 Copy
 python main.py
-Choose one of the following modes:
+Choose from:
 
-1: Build FAISS index from documents
+1: Build or rebuild the FAISS index
 
-2: Semantic search (top-K)
+2: Perform semantic search
 
-3: MMR search (diverse top-K)
+3: Perform MMR search
 
-4: RAG-style answer generation
+4: Generate an answer using retrieved documents
 
-## 📌 Sample Query
+📌 Sample Query
 text
 Copy
-what is the difference between RAG-sequence and RAG-token models
-## 🤝 Contributors
-This project was developed for academic purposes using open-source tools and local models. No paid APIs or cloud services are required.
+What are the advantages of using MMR in document retrieval?
+🤝 Authors
+This single-file implementation was developed for educational purposes using only free and open-source tools. No paid APIs or services are required.
+
+
+
+
+
+
+
