@@ -10,13 +10,15 @@ python -m venv rag_env
 rag_env\Scripts\activate  # On Windows
 or
 source rag_env/bin/activate  # On macOS/Linux
+
 2. Install all dependencies
 bash
 Copy
 pip install -r requirements.txt
 
-# Or install individually:
+- Or install individually:
 pip install langchain sentence-transformers faiss-cpu PyMuPDF python-docx scikit-learn transformers accelerate
+
 3. (Optional) API Configuration
 If you're using any external LLM APIs, set them in config.py. This version supports running fully locally, so no API keys are required.
 
