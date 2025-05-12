@@ -24,9 +24,7 @@ pip install langchain sentence-transformers faiss-cpu PyMuPDF python-docx scikit
 
 
 ## 📁 Project Structure
-perl
-Copy
-rag-system/
+rag-system/                        
 ├── documents/              # Place your source files here (.pdf, .docx, .txt)              
 ├── faiss_store/            # Automatically created to store vector index & metadata                 
 ├── main.py                 # Full system logic (loading, embedding, search, and generation)                
