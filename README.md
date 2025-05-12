@@ -26,17 +26,8 @@ If you're using any external LLM APIs, set them in config.py. This version suppo
 graphql
 Copy
 rag-assignment/
-├── documents/              # Source files (.pdf, .docx, .txt)                     
-├── faiss_store/            # Vector index & metadata                 
-├── main.py                 # Main control script                     
-├── document_loader.py      # PDF, DOCX, TXT loader                   
-├── document_processing.py  # Chunking and cleaning logic                 
-├── embedding.py            # Embedding creation and FAISS indexing                  
-├── retrieval.py            # Semantic and MMR retrieval logic                    
-├── rag_pipeline.py         # Combines retrieval with generation                 
-├── evaluation.py           # Precision, recall, F1 evaluation                  
-├── queries.py              # Sample test queries               
-├── config.py               # Model/API setup and hyperparams                  
+├── documents/              # Source files (.pdf, .docx, .txt)                                     
+├── main.py                 # Main control script                                   
 └── README.md               # Project documentation                   
 
 ## 🧠 System Workflow Overview
