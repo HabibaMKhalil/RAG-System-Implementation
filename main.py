@@ -204,7 +204,7 @@ def evaluate_retrieval_system(index_path: str, model_name: str, queries: List[Di
 
     for item in queries:
         query = item['query']
-        expected_keywords = item['keywords']  # list of expected words in retrieved docs
+        expected_keywords = item['keywords'] 
 
         query_embedding = model.encode([query])
         distances, indices = index.search(np.array(query_embedding), k)
@@ -257,7 +257,7 @@ def compare_models(chunks: List[Dict], queries: List[Dict]):
 
 
 if __name__ == "__main__":
-    mode = input("Select mode: [1] Build Index  [2] Search  [3] MMR Search  [4] RAG Answer: ").strip()
+    mode = input("Select mode: [1] Build Index  [2] Search  [3] MMR Search  [4] RAG Answer  [5] Compare Models: ").strip()
 
     if mode == "1":
         docs = load_documents("documents")
