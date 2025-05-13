@@ -15,7 +15,6 @@ or
 source rag_env/bin/activate  # On macOS/Linux
 2. Install all dependencies
 ```bash
-Copy
 pip install -r requirements.txt
 ```
 
@@ -71,7 +70,6 @@ index_miniLM_metadata.pkl	Stores corresponding chunk metadata
 
 ## ▶️ Running the System
 ```bash
-Copy
 python main.py
 ```
 Choose from:
@@ -81,8 +79,6 @@ Choose from:
 4: Generate an answer using retrieved documents
 
 ## 📌 Sample Query
-text
-Copy
 What are the advantages of using MMR in document retrieval?
 
 ## 🤝 Authors
